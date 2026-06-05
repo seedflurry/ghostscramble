@@ -85,9 +85,9 @@ Each GhostScramble variant uses straightforward chaotic state accumulation proce
 
 The following GhostScramble randomness test results seeded each state variable with `0` (not tampering with GhostScramble state variables after seeding).
 
-In PractRand 0.96, each GhostScramble variant had no `FAIL` results in `stdin64 -tlmin 1KB` tests (for up to at least the default limit of 32TB).
+In PractRand 0.96, each GhostScramble variant had no `FAIL` results in `stdin64 -tlmin 1KB` tests (for up to at least the default maximum of 32TB).
 
-Further randomness test results are in progress and will be updated periodically.
+Further randomness test results are in progress and will be added periodically.
 
 ## Speed Test Results
 
