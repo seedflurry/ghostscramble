@@ -135,7 +135,6 @@ Each of the following results log the fastest process execution speed (in millis
 | *`lcg32` | 3409ms |
 | `lehmer_mcg64` | 3413ms |
 | `lcg64` | 3416ms |
-| `aes_ni_ctr_128` (`-maes -msse4`) | 3796ms |
 | `pcg_oneseq_64_xsl_rr_rr_64` | 3928ms |
 | `splitmix64` | 4385ms |
 | `cwg64` | 4680ms |
