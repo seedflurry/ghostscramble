@@ -54,25 +54,31 @@ Each state variable (`a`, `b`, `c` and `d`) in a `struct ghostscramble256_state`
 
 ## Parallelism
 
-Each GhostScramble variant enables up to 2⁶⁴ parallel sequences (that each have non-probabilistic full state collision avoidance with each other for a period of at least 2⁶⁴) without Philox-style key variables (that could affect randomness quality consistency) or unnecessary jump-ahead functions (each parallel GhostScramble sequence has a minimum distance of 2⁶⁴ output results between each other).
+Each GhostScramble variant enables a set of up to 2⁶⁴ parallel sequences (that each have non-probabilistic full state collision avoidance with each other for a period of at least 2⁶⁴) without Philox-style key variables (that could affect randomness quality consistency) or unnecessary jump-ahead functions (each parallel GhostScramble sequence has a minimum distance of 2⁶⁴ output results between each other).
 
-Each instance within a set of parallel GhostScramble instances must adhere to the following seeding rules (with the state variables `a` and `b`) before generating parallel GhostScramble sequences.
+Each instance within a set of parallel GhostScramble instances must adhere to the following state variable seeding rules before generating parallel GhostScramble sequences.
 
 1. `a` must be seeded with an integer that's unique among the set of parallel GhostScramble instances.
 2. `b` must be seeded with an integer that's consistent among the set of parallel GhostScramble instances.
 3. The remaining state variables must be seeded.
 
-For example, the following seed values are valid for a set of 3 parallel GhostScramble instances.
+For example, the following seed values are valid for a set of 3 parallel `struct ghostscramble256_state` instances.
 
 ```
 a: 0
 b: 0
+c: 1
+d: 2
 
 a: 1
 b: 0
+c: 111111111
+d: 222222222
 
 a: 2
 b: 0
+c: 111111111111111111
+d: 222222222222222222
 ```
 
 After seeding a set of parallel GhostScramble instances, assigning a value (outside of an iterative GhostScramble procedure) to either `a` or `b` voids the aforementioned parallelism segmentation properties.
