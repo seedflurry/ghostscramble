@@ -7,7 +7,6 @@
 - [Introduction](README.md?tab=readme-ov-file#introduction)
 - [Author](README.md?tab=readme-ov-file#author)
 - [License](README.md?tab=readme-ov-file#license)
-- [Motivation](README.md?tab=readme-ov-file#motivation)
 - [Implementation](README.md?tab=readme-ov-file#implementation)
 - [Parallelism](README.md?tab=readme-ov-file#parallelism)
 - [Randomness Test Results](README.md?tab=readme-ov-file#randomness-test-results)
@@ -24,12 +23,6 @@ GhostScramble was created by me, [William Stafford Parsons](https://github.com/w
 ## License
 
 GhostScramble is licensed with the [BSD-3-Clause](LICENSE) license.
-
-## Motivation
-
-As an enjoyer of video games, it was brought to my attention that high-fidelity 3D graphics algorithms (such as ambient occlusion and path tracing) decrease game engine rendering performance partially due to the massive overhead of generating up to billions of pseudorandom numbers (per second) with slow PRNGs.
-
-As a solution, I built GhostScramble as the ultimate 64-bit PRNG to outperform (in as many ways as possible) the fastest 64-bit PRNGs in the world.
 
 ## Implementation
 
