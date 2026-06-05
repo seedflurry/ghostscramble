@@ -87,7 +87,7 @@ The following GhostScramble randomness test results seeded each state variable w
 
 In PractRand 0.96, each GhostScramble variant had no `FAIL` results for up to at least 4TB (and likely beyond 8TB) in `stdin64 -tlmin 1KB` tests.
 
-Further randomness test results are in progress.
+Further randomness test results are in progress and will be updated periodically, including the aforementioned PractRand results (testing up to the 32TB default requires about 2 weeks on a slow laptop).
 
 ## Speed Test Results
 
