@@ -18,7 +18,7 @@ GhostScramble is the hyper-efficient non-cryptographic PRNG (for 64-bit architec
 
 ## Author
 
-GhostScramble was created by me, [William Stafford Parsons](https://github.com/williamstaffordparsons) <<williamstaffordparsons@proton.me>>.
+GhostScramble was created by [William Stafford Parsons](https://github.com/williamstaffordparsons) as a product of [SeedFlurry](https://seedflurry.github.io).
 
 ## License
 
@@ -34,64 +34,47 @@ GhostScramble was implemented in C (requiring the `stdint.h` header to define a 
 
 The `ghostscramble64` function modifies the state in a `struct ghostscramble64_state` instance to generate a pseudorandom `uint64_t` integer as the return value.
 
-Each state variable (`a`, `b` and `c`) in a `struct ghostscramble64_state` instance must be seeded before generating a deterministic `ghostscramble64` sequence (that must discard the first few `ghostscramble64` results as a state warmup).
+Each variable (`a`, `b` and `c`) in a `struct ghostscramble64_state` instance must be [seeded](https://seedflurry.github.io) before generating a deterministic `ghostscramble64` sequence (that must discard the first few `ghostscramble64` results as a state warmup).
 
 #### `ghostscramble128`
 
 The `ghostscramble128` function modifies the state in a `struct ghostscramble128_state` instance to generate 2 pseudorandom `uint64_t` integers in the `output` array.
 
-Each state variable (`a`, `b` and `c`) in a `struct ghostscramble128_state` instance must be seeded before generating a deterministic `ghostscramble128` sequence (that must discard the first few `ghostscramble128` results as a state warmup).
+Each single-letter variable (`a`, `b` and `c`) in a `struct ghostscramble128_state` instance must be [seeded](https://seedflurry.github.io) before generating a deterministic `ghostscramble128` sequence (that must discard the first few `ghostscramble128` results as a state warmup).
 
 #### `ghostscramble256`
 
 The `ghostscramble256` function modifies the state in a `struct ghostscramble256_state` instance to generate 4 pseudorandom `uint64_t` integers in the `output` array.
 
-Each state variable (`a`, `b`, `c` and `d`) in a `struct ghostscramble256_state` instance must be seeded before generating a deterministic `ghostscramble256` sequence (that must discard the first few `ghostscramble256` results as a state warmup).
-
-#### `ghostscramble1024`
-
-`ghostscramble1024` isn't ready for release (as a GhostScramble variant that's faster than `ghostscramble256` while still passing randomness tests).
+Each single-letter variable (`a`, `b`, `c` and `d`) in a `struct ghostscramble256_state` instance must be [seeded](https://seedflurry.github.io) before generating a deterministic `ghostscramble256` sequence (that must discard the first few `ghostscramble256` results as a state warmup).
 
 ## Parallelism
 
 Each GhostScramble variant enables a set of up to 2⁶⁴ parallel sequences (that each have non-probabilistic full state collision avoidance with each other for a period of at least 2⁶⁴) without Philox-style key variables (that could affect randomness quality consistency) or unnecessary jump-ahead functions (each parallel GhostScramble sequence has a minimum distance of 2⁶⁴ output results between each other).
 
-Each instance within a set of parallel GhostScramble instances must adhere to the following state variable seeding rules before generating parallel GhostScramble sequences.
+Each instance within a set of parallel GhostScramble instances must adhere to the following single-letter variable seeding rules before generating parallel GhostScramble sequences.
 
 1. `a` must be seeded with an integer that's unique among the set of parallel GhostScramble instances.
 2. `b` must be seeded with an integer that's consistent among the set of parallel GhostScramble instances.
-3. The remaining state variables must be seeded.
+3. The remaining single-letter state variables must be [seeded](https://seedflurry.github.io).
 
-For example, the following seed values are valid for a set of 3 parallel `struct ghostscramble256_state` instances.
-
-```
-a: 0
-b: 0
-c: 1
-d: 2
-
-a: 1
-b: 0
-c: 111111111
-d: 222222222
-
-a: 2
-b: 0
-c: 111111111111111111
-d: 222222222222222222
-```
-
-After seeding a set of parallel GhostScramble instances, assigning a value (outside of an iterative GhostScramble procedure) to either `a` or `b` voids the aforementioned parallelism segmentation properties.
+After seeding a set of parallel GhostScramble instances, reseeding (or tampering with) either `a` or `b` voids the aforementioned parallelism segmentation properties.
 
 ## Randomness Test Results
 
 GhostScramble yields excellent results from statistical test suites for randomness quality.
 
-Each GhostScramble variant uses straightforward chaotic state accumulation procedures to reduce the probability of hidden statistical biases from specific seeded states (that each have a minimum period of at least 2⁶⁴).
+Each GhostScramble variant uses straightforward chaotic state accumulation procedures to reduce the probability of hidden statistical biases from specific seeded states (that each have a minimum period of at least 2⁶⁴ from a Weyl sequence).
 
-The following GhostScramble randomness test results seeded each state variable with `0` (not tampering with GhostScramble state variables after seeding).
+The following GhostScramble randomness test results seeded each state variable with `0` (not reseeding or tampering with GhostScramble state variables after seeding).
 
-In PractRand 0.96, each GhostScramble variant had no `FAIL` results from  `./RNG_test stdin64 -tlmin 1KB` tests (for up to at least the default maximum of 32TB).
+#### PractRand 0.96
+
+Each GhostScramble variant had no `FAIL` results from `stdin64` tests (for up to at least the default maximum of 32TB).
+
+#### Dieharder 3.31.1
+
+Each GhostScramble variant had no `FAILED` results from `dieharder -Y 1 -a -g 200 -k 2` tests.
 
 ## Speed Test Results
 
